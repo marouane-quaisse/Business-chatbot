@@ -1,0 +1,10 @@
+.env
+notes.txt
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Base de données locale (users, sessions, messages)
+*.db
+*.sqlite3

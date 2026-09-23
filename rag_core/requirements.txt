@@ -1,0 +1,37 @@
+# Dépendances du cœur RAG
+# Installation : ./.venv/Scripts/python.exe -m pip install -r requirements.txt
+
+# Orchestration RAG
+langchain
+langchain-community
+langchain-groq
+langchain-chroma
+langchain-huggingface
+langchain-text-splitters
+
+# Vector store
+chromadb
+
+# Embeddings locaux
+sentence-transformers
+
+# Chargement de PDF
+pypdf
+
+# Config
+python-dotenv
+
+# API web (FastAPI) — expose le RAG en HTTP + sert l'interface de chat
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Base de données (users, sessions, messages)
+sqlalchemy
+
+# Authentification (hash des mots de passe)
+# On utilise bcrypt directement : passlib 1.7.4 est incompatible avec bcrypt >= 4.1
+bcrypt
+
+# Validation des emails dans les schémas Pydantic
+email-validator

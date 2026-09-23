@@ -1,0 +1,162 @@
+Evaluation Results :
+  Configuration active :
+   ENABLE_MULTI_QUERY   = True
+   ENABLE_HYDE          = True
+   ENABLE_RERANK        = True
+   MULTI_QUERY_COUNT    = 4
+   RETRIEVAL_CANDIDATES = 20
+
+==============================================================================
+📊 ÉVALUATION DU RETRIEVAL — 25 cas de test, k=4
+==============================================================================
+
+📈 RÉSULTATS
+==============================================================================
+  Hit Rate @k      : 100.0%   (bon doc trouvé)
+  Recall @k        : 100.0%
+  MRR              : 0.980  (1.0 = toujours en 1ère position)
+  Precision @k     : 73.0%   (chunks pertinents)
+  Mots-clés OK     : 92.0%   (bon passage, pas juste bon fichier)
+  Latence moyenne  : 5.34s
+
+⚠️  2 cas avec le bon fichier mais le mauvais passage :
+   • Combien de temps j'ai pour renvoyer un produit ?
+   • Quel service gère l'intelligence artificielle ?
+
+############################################################################################
+
+⚙️  Configuration active :
+   ENABLE_MULTI_QUERY   = True
+   ENABLE_HYDE          = False
+   ENABLE_RERANK        = True
+   MULTI_QUERY_COUNT    = 4
+   RETRIEVAL_CANDIDATES = 20
+
+==============================================================================
+📊 ÉVALUATION DU RETRIEVAL — 25 cas de test, k=4
+==============================================================================
+📈 RÉSULTATS
+==============================================================================
+  Hit Rate @k      : 100.0%   (bon doc trouvé)
+  Recall @k        : 100.0%
+  MRR              : 0.980  (1.0 = toujours en 1ère position)
+  Precision @k     : 73.0%   (chunks pertinents)
+  Mots-clés OK     : 92.0%   (bon passage, pas juste bon fichier)
+  Latence moyenne  : 4.79s
+
+⚠️  2 cas avec le bon fichier mais le mauvais passage :
+   • Combien de temps j'ai pour renvoyer un produit ?
+   • Quel service gère l'intelligence artificielle ?
+
+==============================================================================
+
+#######################################################################################
+
+
+⚙️  Configuration active :
+   ENABLE_MULTI_QUERY   = False
+   ENABLE_HYDE          = True
+   ENABLE_RERANK        = True
+   MULTI_QUERY_COUNT    = 4
+   RETRIEVAL_CANDIDATES = 20
+
+==============================================================================
+📊 ÉVALUATION DU RETRIEVAL — 25 cas de test, k=4
+==============================================================================
+📈 RÉSULTATS
+==============================================================================
+  Hit Rate @k      : 100.0%   (bon doc trouvé)
+  Recall @k        : 100.0%
+  MRR              : 0.980  (1.0 = toujours en 1ère position)
+  Precision @k     : 76.0%   (chunks pertinents)
+  Mots-clés OK     : 96.0%   (bon passage, pas juste bon fichier)
+  Latence moyenne  : 4.64s
+
+⚠️  1 cas avec le bon fichier mais le mauvais passage :
+   • Quel service gère l'intelligence artificielle ?
+
+==============================================================================
+
+
+##################################################################################
+
+⚙️  Configuration active :
+   ENABLE_MULTI_QUERY   = False
+   ENABLE_HYDE          = False
+   ENABLE_RERANK        = True
+   MULTI_QUERY_COUNT    = 4
+   RETRIEVAL_CANDIDATES = 20
+
+==============================================================================
+📊 ÉVALUATION DU RETRIEVAL — 25 cas de test, k=4
+==============================================================================
+📈 RÉSULTATS
+==============================================================================
+  Hit Rate @k      : 100.0%   (bon doc trouvé)
+  Recall @k        : 100.0%
+  MRR              : 0.980  (1.0 = toujours en 1ère position)
+  Precision @k     : 73.0%   (chunks pertinents)
+  Mots-clés OK     : 96.0%   (bon passage, pas juste bon fichier)
+  Latence moyenne  : 4.43s
+
+⚠️  1 cas avec le bon fichier mais le mauvais passage :
+   • Quel service gère l'intelligence artificielle ?
+
+==============================================================================
+
+##############################################################################
+
+
+⚙️  Configuration active :
+   ENABLE_MULTI_QUERY   = False
+   ENABLE_HYDE          = False
+   ENABLE_RERANK        = False
+   MULTI_QUERY_COUNT    = 4
+   RETRIEVAL_CANDIDATES = 20
+
+==============================================================================
+📊 ÉVALUATION DU RETRIEVAL — 25 cas de test, k=4
+==============================================================================
+📈 RÉSULTATS
+==============================================================================
+  Hit Rate @k      : 100.0%   (bon doc trouvé)
+  Recall @k        : 100.0%
+  MRR              : 0.980  (1.0 = toujours en 1ère position)
+  Precision @k     : 71.0%   (chunks pertinents)
+  Mots-clés OK     : 88.0%   (bon passage, pas juste bon fichier)
+  Latence moyenne  : 3.15s
+
+⚠️  3 cas avec le bon fichier mais le mauvais passage :
+   • Quelles sont les entités du projet ?
+   • Qui a encadré ce projet ?
+   • Quel service gère l'intelligence artificielle ?
+
+
+
+##################################################################################
+
+⚙️  Configuration active :
+   ENABLE_MULTI_QUERY   = True
+   ENABLE_HYDE          = True
+   ENABLE_RERANK        = False
+   MULTI_QUERY_COUNT    = 4
+   RETRIEVAL_CANDIDATES = 20
+
+==============================================================================
+📊 ÉVALUATION DU RETRIEVAL — 25 cas de test, k=4
+==============================================================================
+📈 RÉSULTATS
+==============================================================================
+  Hit Rate @k      : 100.0%   (bon doc trouvé)
+  Recall @k        : 100.0%
+  MRR              : 1.000  (1.0 = toujours en 1ère position)
+  Precision @k     : 72.0%   (chunks pertinents)
+  Mots-clés OK     : 88.0%   (bon passage, pas juste bon fichier)
+  Latence moyenne  : 4.88s
+
+⚠️  3 cas avec le bon fichier mais le mauvais passage :
+   • Quelles sont les entités du projet ?
+   • Qui a encadré ce projet ?
+   • Quel service gère l'intelligence artificielle ?
+
+==============================================================================

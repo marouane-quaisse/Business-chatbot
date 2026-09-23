@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assistant documentaire · RAG</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>" />
+</head>
+<body>
+  <!-- ====================================================================
+       ÉCRAN D'AUTHENTIFICATION (affiché tant que l'utilisateur n'a pas
+       choisi : connexion, inscription, ou mode anonyme)
+       ==================================================================== -->
+  <div class="auth-screen" id="authScreen">
+    <div class="auth-card">
+      <div class="auth-brand">
+        <div class="brand-mark">◆</div>
+        <h1>Atlas</h1>
+        <p>Assistant documentaire</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin">Connexion</button>
+        <button class="auth-tab" id="tabSignup">Inscription</button>
+      </div>
+
+      <form class="auth-form" id="authForm">
+        <label>
+          <span>Email</span>
+          <input type="email" id="authEmail" placeholder="vous@exemple.com" required autocomplete="email" />
+        </label>
+        <label>
+          <span>Mot de passe</span>
+          <input type="password" id="authPassword" placeholder="6 caractères minimum" required minlength="6" autocomplete="current-password" />
+        </label>
+        <button type="submit" class="auth-submit" id="authSubmit">Se connecter</button>
+        <div class="auth-error" id="authError"></div>
+      </form>
+
+      <div class="auth-divider"><span>ou</span></div>
+
+      <button class="auth-anon" id="anonBtn">Continuer sans s'authentifier</button>
+
+      <p class="auth-warning">
+        ⚠️ En mode anonyme, <strong>vos conversations et votre progression ne sont pas sauvegardées</strong>.
+        Tout sera perdu au rechargement de la page.
+      </p>
+    </div>
+  </div>
+
+  <div class="app" id="app" hidden>
+    <!-- Bandeau d'avertissement en mode anonyme -->
+    <div class="anon-banner" id="anonBanner" hidden>
+      <span>Mode anonyme — vos conversations ne sont pas sauvegardées.</span>
+      <button id="anonLoginBtn">Se connecter</button>
+    </div>
+
+    <div class="app-body">
+    <!-- ==================================================================
+         SIDEBAR : conversations + documents
+         ================================================================== -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">◆</div>
+        <div class="brand-text">
+          <h1>Atlas</h1>
+          <span>Assistant documentaire</span>
+        </div>
+      </div>
+
+      <!-- Conversations (uniquement en mode authentifié) -->
+      <div class="panel grow" id="sessionsPanel" hidden>
+        <div class="panel-title">
+          Conversations
+          <button class="btn-mini" id="newSessionBtn" title="Nouvelle conversation">+</button>
+        </div>
+        <ul class="sessions" id="sessionsList"></ul>
+      </div>
+
+      <!-- Documents : liste des fichiers + ajout -->
+      <div class="panel grow">
+        <div class="panel-title">
+          Documents
+          <button class="btn-mini" id="uploadBtn" title="Ajouter un fichier">+</button>
+        </div>
+        <input type="file" id="fileInput" accept=".pdf,.md,.txt" hidden />
+        <ul class="doc-list" id="docList"></ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="user-row" id="userRow" hidden>
+          <span class="user-email" id="userEmail"></span>
+          <button class="btn-mini" id="switchAccountBtn" title="Changer de compte">⇄</button>
+          <button class="btn-mini" id="logoutBtn" title="Se déconnecter">⏻</button>
+        </div>
+        <button class="btn-ghost danger" id="clearBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>
+          Effacer la conversation
+        </button>
+      </div>
+    </aside>
+
+    <!-- ==================================================================
+         ZONE PRINCIPALE : la conversation
+         ================================================================== -->
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-title">
+          <span class="live-dot"></span>
+          <span>Conversation</span>
+        </div>
+        <div class="topbar-meta" id="topbarMeta"></div>
+      </header>
+
+      <div class="chat" id="chat">
+        <!-- Bouton "Voir plus" : charge les messages plus anciens -->
+        <button class="load-more" id="loadMoreBtn" hidden>Voir plus de messages</button>
+
+        <!-- Écran d'accueil -->
+        <div class="welcome" id="welcome">
+          <div class="welcome-mark">◆</div>
+          <h2>Posez votre question</h2>
+          <p>
+            Je réponds uniquement à partir des documents indexés.
+            Si l'information n'y figure pas, je vous le dirai.
+          </p>
+          <div class="suggestions" id="suggestions">
+            <button class="suggestion">Quels sont les horaires du service client ?</button>
+            <button class="suggestion">Quel est le délai de retour d'un article ?</button>
+            <button class="suggestion">Quelle technologie est utilisée pour le backend ?</button>
+            <button class="suggestion">La livraison est-elle gratuite ?</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barre de saisie -->
+      <footer class="composer">
+        <div class="composer-inner">
+          <textarea
+            id="input"
+            rows="1"
+            placeholder="Posez votre question…"
+            autocomplete="off"
+          ></textarea>
+          <button class="send" id="send" title="Envoyer (Entrée)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </button>
+          <button class="stop" id="stop" title="Arrêter" hidden>
+            <svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="7" width="10" height="10" rx="2"/></svg>
+          </button>
+        </div>
+        <div class="composer-hint">
+          <kbd>Entrée</kbd> pour envoyer · <kbd>Maj</kbd>+<kbd>Entrée</kbd> pour un saut de ligne
+        </div>
+      </footer>
+    </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
