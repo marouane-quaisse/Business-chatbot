@@ -8,3 +8,6 @@ venv/
 # Base de données locale (users, sessions, messages)
 *.db
 *.sqlite3
+
+# Base vectorielle ChromaDB (générée localement)
+vector_db/
